@@ -1,0 +1,26 @@
+base:
+  random_seed: 0
+  model_image_size: 256
+  # Loss needs to be here since both train and evaluate need it
+  loss_function: iou_loss # Options: binary_crossentropy, iou_loss, dice_loss
+data_split:
+  test_split: 0.2
+  data_dir: data/all_data/
+  train_data_dir: data/train/
+  test_data_dir: data/test/
+train:
+  train_data_dir: data/train/
+  model_save_dir: models/
+  batch_size: 5
+  epochs: 5
+  activation_function: sigmoid
+  learning_rate: 0.0001
+  norm_upper_bound: 7
+  norm_lower_bound: -1
+  validation_split: 0.2
+evaluate:
+  model_path: models/catsnet_model.keras
+  test_data_dir: data/test/
+
+
+

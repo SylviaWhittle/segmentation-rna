@@ -1,0 +1,51 @@
+stages:
+  data_split:
+    cmd: python src/data_split.py
+    deps:
+    - data/all_data/
+    - src/data_split.py
+    params:
+    - base
+    - data_split
+    outs:
+    - data/test
+    - data/train
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/train/
+    - src/train.py
+    - src/unet.py
+    params:
+    - base
+    - train
+    outs:
+    - models/catsnet_model.keras
+    - results/train/
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/test/
+    - models/catsnet_model.keras
+    - src/evaluate.py
+    - src/unet.py
+    params:
+    - base
+    - evaluate
+    outs:
+    - results/evaluate/
+metrics:
+- results/train/metrics.json
+- results/evaluate/metrics.json
+plots:
+- results/train/plots/metrics:
+    x: step
+- results/evaluate/plots/images
+artifacts:
+  catsnet_model:
+    path: models/catsnet_model.keras
+    type: model
+    desc: Model trained to segment cats.
+    labels:
+    - cv
+    - segmentation

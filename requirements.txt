@@ -1,0 +1,11 @@
+tensorflow
+keras
+dvc
+dvc-gdrive
+dvclive
+numpy
+matplotlib
+ruamel.yaml
+scikit-image
+scikit-learn
+loguru
