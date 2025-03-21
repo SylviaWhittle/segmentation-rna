@@ -34,3 +34,80 @@ stages:
       md5: add3faeb1987e8fbb2cfbff46bfde9bd.dir
       size: 14571312
       nfiles: 144
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/train/
+      hash: md5
+      md5: add3faeb1987e8fbb2cfbff46bfde9bd.dir
+      size: 14571312
+      nfiles: 144
+    - path: src/train.py
+      hash: md5
+      md5: 0dc77a4becf1515dd9a12116f75074f3
+      size: 8382
+    - path: src/unet.py
+      hash: md5
+      md5: 78cf361fdf49cb988dfe4fa539f34623
+      size: 7562
+    params:
+      params.yaml:
+        base:
+          random_seed: 0
+          model_image_size: 256
+          loss_function: iou_loss
+        train:
+          train_data_dir: data/train/
+          model_save_dir: models/
+          batch_size: 5
+          epochs: 5
+          activation_function: sigmoid
+          learning_rate: 0.0001
+          norm_upper_bound: 7
+          norm_lower_bound: -1
+          validation_split: 0.2
+    outs:
+    - path: models/catsnet_model.keras
+      hash: md5
+      md5: 339cd36313eec0796e48d47a4f429eb2
+      size: 23468067
+    - path: results/train/
+      hash: md5
+      md5: 314cd346d72fdb5e0c1b7d7051e8a1d0.dir
+      size: 676
+      nfiles: 5
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/test/
+      hash: md5
+      md5: 1f2e4245c47e2d401d501423f4b5291d.dir
+      size: 4080262
+      nfiles: 40
+    - path: models/catsnet_model.keras
+      hash: md5
+      md5: 339cd36313eec0796e48d47a4f429eb2
+      size: 23468067
+    - path: src/evaluate.py
+      hash: md5
+      md5: 08b9faf2aa96db1d77a76e40dddf8e82
+      size: 6277
+    - path: src/unet.py
+      hash: md5
+      md5: 78cf361fdf49cb988dfe4fa539f34623
+      size: 7562
+    params:
+      params.yaml:
+        base:
+          random_seed: 0
+          model_image_size: 256
+          loss_function: iou_loss
+        evaluate:
+          model_path: models/catsnet_model.keras
+          test_data_dir: data/test/
+    outs:
+    - path: results/evaluate/
+      hash: md5
+      md5: b680e1846d3d1ec0c9a4edff6e4a1dc1.dir
+      size: 1732830
+      nfiles: 11
