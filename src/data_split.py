@@ -26,7 +26,7 @@ def data_split(
     num_images = len(list(data_dir.glob("image_*.npy")))
     num_masks = len(list(data_dir.glob("mask_*.npy")))
     if num_images != num_masks:
-        raise ValueError("Different number of images and masks.")
+        raise ValueError(f"Different number of images and masks. {num_images} images | {num_masks} masks")
 
     # Train test split
     image_indexes = [int(re.search(r"\d+", file.name).group()) for file in data_dir.glob("image_*.npy")]

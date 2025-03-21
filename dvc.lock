@@ -1,0 +1,36 @@
+schema: '2.0'
+stages:
+  data_split:
+    cmd: python src/data_split.py
+    deps:
+    - path: data/all_data/
+      hash: md5
+      md5: 3a32ea8704549c4d20d3be105ab6ffc8.dir
+      size: 18651574
+      nfiles: 184
+    - path: src/data_split.py
+      hash: md5
+      md5: 92cbc3ea6a0740e559466a998e11ba99
+      size: 3506
+    params:
+      params.yaml:
+        base:
+          random_seed: 0
+          model_image_size: 256
+          loss_function: iou_loss
+        data_split:
+          test_split: 0.2
+          data_dir: data/all_data/
+          train_data_dir: data/train/
+          test_data_dir: data/test/
+    outs:
+    - path: data/test
+      hash: md5
+      md5: 1f2e4245c47e2d401d501423f4b5291d.dir
+      size: 4080262
+      nfiles: 40
+    - path: data/train
+      hash: md5
+      md5: add3faeb1987e8fbb2cfbff46bfde9bd.dir
+      size: 14571312
+      nfiles: 144
